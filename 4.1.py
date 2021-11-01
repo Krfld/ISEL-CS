@@ -36,4 +36,5 @@ def hash_MD_funcaof(m: str, H0: str):
 m = '010101010101010000'
 H0 = '1000'
 
+# HASH
 print(hash_MD_funcaof(m, H0))
