@@ -30,14 +30,11 @@ def hash_MD_funcaof(m: str, H0: str):
         # Update next H
         H += [B[3].rjust(4, '0')]
 
-    print(mi)
-    print(H)
-
     return H[len(mi)].rjust(4, '0')
 
 
 m = '010101010101010000'
 H0 = '1111'
 
-# HASH
+# 0000
 print(hash_MD_funcaof(m, H0))
