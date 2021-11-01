@@ -1,4 +1,5 @@
 import numpy as np
+from numpy.matrixlib.defmatrix import matrix
 
 
 def imprimir_matriz(matriz):
@@ -41,31 +42,37 @@ def inversa_modn(mod, matriz):
         # Imprimir matriz invertida:
         print("Matriz invertida:")
         imprimir_matriz(matriz_invertida)
+        return matriz_invertida
     except ValueError:
         # Caso o determinante não existe
         print("A matriz não é invertível módulo", mod)
 
 
-inversa_modn(17, [[6, 8],
-                  [4, 12]])
+assert inversa_modn(17, [[6, 8],
+                         [4, 12]]) == [[3, 15],
+                                       [13, 10]]
 
 print("--------------------------------------------")
 
-inversa_modn(3, [[1, 2],
-                 [2, 1]])
+assert inversa_modn(3, [[1, 2],
+                        [2, 1]]) == [[1, 2],
+                                     [2, 1]]
 
 print("--------------------------------------------")
 
 # Como 23 é número primo, todos os naturais inferiores
 # a 23 são invertíveis módulo 23.
-inversa_modn(23, [[1, 5, 4, 17],
-                  [11, 7, 22, 20],
-                  [2, 9, 16, 12],
-                  [15, 6, 8, 13]])
+assert inversa_modn(23, [[1, 5, 4, 17],
+                         [11, 7, 22, 20],
+                         [2, 9, 16, 12],
+                         [15, 6, 8, 13]]) == [[1, 14, 6, 19],
+                                              [21, 10, 22, 15],
+                                              [12, 18, 13, 2],
+                                              [20, 4, 3, 16]]
 
 print("--------------------------------------------")
 
 # Não consegue gerar a matriz inversa porque 9 não é
 # invertível módulo 18.
-inversa_modn(18, [[5, 11],
-                  [7, 9]])
+assert inversa_modn(18, [[5, 11],
+                         [7, 9]]) == None

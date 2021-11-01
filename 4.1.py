@@ -38,15 +38,20 @@ H0 = '1111'
 
 # 0000
 print(hash_MD_funcaof(m, H0))
+assert hash_MD_funcaof(m, H0) == '0000'
 
 # EX 1	1011
 print(hash_MD_funcaof(m, '1010'))
+assert hash_MD_funcaof(m, '1010') == '1011'
 
 # EX 2	0001
 print(hash_MD_funcaof(m, '0000'))
+assert hash_MD_funcaof(m, '0000') == '0001'
 
 # EX 3	0011
 print(hash_MD_funcaof('111111111111111111111', '0000'))
+assert hash_MD_funcaof('111111111111111111111', '0000') == '0011'
 
 # EX 4	0100
 print(hash_MD_funcaof('0000000000000000', '0000'))
+assert hash_MD_funcaof('0000000000000000', '0000') == '0100'
