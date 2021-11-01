@@ -1,5 +1,4 @@
 import numpy as np
-from numpy.matrixlib.defmatrix import matrix
 
 
 def imprimir_matriz(matriz):
