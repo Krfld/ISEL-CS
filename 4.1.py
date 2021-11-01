@@ -28,13 +28,16 @@ def hash_MD_funcaof(m: str, H0: str):
             B[j+1] = bin(int(B[j], 2)+int(B[j+1], 2)).removeprefix('0b')[-4:]
 
         # Update next H
-        H += [B[3]]
+        H += [B[3].rjust(4, '0')]
+
+    print(mi)
+    print(H)
 
     return H[len(mi)].rjust(4, '0')
 
 
 m = '010101010101010000'
-H0 = '1000'
+H0 = '1111'
 
 # HASH
 print(hash_MD_funcaof(m, H0))
