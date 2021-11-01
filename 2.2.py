@@ -37,3 +37,10 @@ print(cifras_sustituicao_bytes(M, K, 4))
 
 # iv    11010011
 print(cifras_sustituicao_bytes(M, K, 8))
+
+
+# EX 1  00010011
+print(cifras_sustituicao_bytes(0b10101110, 0b01110101, 4))
+
+# EX 2  00100011
+print(cifras_sustituicao_bytes(0b10101110, 0b01110101, 8))
