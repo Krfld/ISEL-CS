@@ -6,4 +6,8 @@ Port:
 Username:
 	g11
 Password:
-	QqC9zyfBhW
+	QqC9zyfBhW~
+
+cp -R /opt/intel/sgxsdk/SampleCode/cs_2122i/ ~/.
+
+source /opt/intel/sgxsdk/environment
